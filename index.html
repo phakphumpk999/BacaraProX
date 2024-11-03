@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+<!DOCTYPE html> 
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -559,8 +559,8 @@
                 
                 if (predictedResult === "P" || predictedResult === "B") {
                     const resultText = predictedResult === "P" ? "PLAYER" : "BANKER";
-                    nextResultDisplay.textContent = ${resultText} ไม้ที่ ${currentStep} ลงเงิน ${currentBet} บาท;
-                    nextResultDisplay.className = result-display ${predictedResult === "P" ? "player-result" : "banker-result"};
+                    nextResultDisplay.textContent = `${resultText} ไม้ที่ ${currentStep} ลงเงิน ${currentBet} บาท`;
+                    nextResultDisplay.className = `result-display ${predictedResult === "P" ? "player-result" : "banker-result"}`;
                 } else {
                     nextResultDisplay.textContent = "รอตาถัดไป";
                     nextResultDisplay.className = "result-display waiting-result";
@@ -588,7 +588,7 @@
                 const totalCapitalCell = document.createElement("td");
 
                 betCell.textContent = predictedResult === "P" ? "PLAYER" : "BANKER";
-                stepCell.textContent = ไม้ที่ ${currentStep};
+                stepCell.textContent = `ไม้ที่ ${currentStep}`;
 
                 if (predictedResult === actualResult) {
                     resultCell.textContent = "Win";
@@ -651,7 +651,7 @@
         }
 
         function updateCharts(result) {
-            labels.push(ไม้ ${labels.length + 1});
+            labels.push(`ไม้ ${labels.length + 1}`);
             dataWinLose.push(result === 'Win' ? 1 : -1);
             lineChart.update();
 
