@@ -14,18 +14,6 @@
             padding: 0;
         }
 
-        /* สีสำหรับ Win และ Lose */
-        .win {
-            color: #2ecc71; /* สีเขียวสำหรับ Win */
-            font-weight: bold;
-        }
-
-        .lose {
-            color: #e74c3c; /* สีแดงสำหรับ Lose */
-            font-weight: bold;
-        }
-
-        /* สไตล์หลัก */
         .container {
             max-width: 1200px;
             margin: auto;
@@ -47,21 +35,9 @@
             color: #fff;
         }
 
-        .player-result {
-            background-color: #3498db;
-        }
-
-        .banker-result {
-            background-color: #e74c3c;
-        }
-
-        .waiting-result {
-            background-color: #353b48;
-        }
-
         .score-grid {
             display: grid;
-            grid-template-columns: repeat(12, 50px);
+            grid-template-columns: repeat(6, 50px);
             gap: 5px;
             justify-content: center;
             margin: 20px auto;
@@ -78,38 +54,7 @@
             font-weight: bold;
         }
 
-        .player { background-color: #3498db; color: #fff; }
-        .banker { background-color: #e74c3c; color: #fff; }
-        .tie { background-color: #2ecc71; color: #fff; }
-
         .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px;
-        }
-
-        button {
-            padding: 15px 25px;
-            font-size: 1.1em;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-player { background-color: #3498db; color: #fff; }
-        .btn-tie { background-color: #2ecc71; color: #fff; }
-        .btn-banker { background-color: #e74c3c; color: #fff; }
-        .btn-back { background-color: #f39c12; color: #fff; }
-        .btn-clear { background-color: #d35400; color: #fff; }
-
-        button:hover {
-            opacity: 0.9;
-            transform: scale(1.05);
-        }
-
-        .settings, .score-settings {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -117,105 +62,128 @@
             margin: 20px;
         }
 
-        .settings label, .score-settings label {
-            font-size: 1.1em;
-            margin-right: 5px;
-            color: #dcdde1;
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* ความกว้างของช่องเลือกห้อง */
         .score-settings select {
-            padding: 10px;
-            font-size: 1.1em;
+            padding: 8px;
+            font-size: 1em;
             border-radius: 8px;
             border: none;
-            width: 220px;
-            text-align: center;
-        }
-
-        .settings input[type="number"], .score-settings select {
-            padding: 10px;
-            font-size: 1.1em;
-            border-radius: 8px;
-            border: none;
+            width: 180px;
             text-align: center;
         }
 
         .report-table {
-            width: 80%;
-            margin: 30px auto;
+            width: 100%;
+            margin: 20px auto;
             border-collapse: collapse;
             border-radius: 8px;
             overflow: hidden;
         }
 
         .report-table th, .report-table td {
-            padding: 15px;
+            padding: 10px;
             border: 1px solid #333;
             text-align: center;
             background-color: #353b48;
             color: #dcdde1;
-        }
-
-        .report-table th {
-            background-color: #2f3640;
-            font-weight: bold;
+            font-size: 0.9em;
         }
 
         .summary {
-            font-size: 1.3em;
-            margin: 20px 0;
+            font-size: 1.2em;
+            margin: 15px 0;
             color: #f5f6fa;
         }
 
         .chart-container {
-            width: 80%;
+            width: 100%;
             margin: 20px auto;
         }
 
-        .report-table td.win {
-            color: #2ecc71;
-            font-weight: bold;
-        }
+        /* สำหรับหน้าจอขนาดเล็ก */
+        @media (max-width: 768px) {
+            .header {
+                font-size: 1.5em;
+            }
 
-        .report-table td.lose {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
-        /* CSS สำหรับแถบโหลด */
-        .loader {
-            width: 60%;
-            height: 10px;
-            border-radius: 2px;
-            background-color: rgba(0, 0, 0, 0.2);
-            position: relative;
-            margin: 0 auto;
-        }
-
-        .loader::before {
-            content: "";
-            position: absolute;
-            background-color: rgb(9, 188, 9);
-            width: 0%;
-            height: 100%;
-            border-radius: 2px;
-            animation: load 3.5s ease-in-out infinite;
-            box-shadow: rgb(9, 188, 9) 0px 2px 29px 0px;
-        }
-
-        @keyframes load {
-            50% {
+            .result-display {
+                font-size: 1.5em;
                 width: 100%;
             }
-            100% {
-                right: 0;
-                left: unset;
+
+            .score-grid {
+                grid-template-columns: repeat(4, 40px);
+            }
+
+            .score-cell {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+            }
+
+            button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            .report-table th, .report-table td {
+                padding: 8px;
+                font-size: 0.8em;
+            }
+
+            .summary {
+                font-size: 1em;
+            }
+
+            .chart-container {
+                width: 100%;
+            }
+        }
+
+        /* สำหรับหน้าจอขนาดเล็กมาก (มือถือ) */
+        @media (max-width: 480px) {
+            .header {
+                font-size: 1.2em;
+            }
+
+            .result-display {
+                font-size: 1.2em;
+            }
+
+            .score-grid {
+                grid-template-columns: repeat(3, 35px);
+            }
+
+            .score-cell {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9em;
+            }
+
+            button {
+                padding: 6px 10px;
+                font-size: 0.8em;
+            }
+
+            .report-table th, .report-table td {
+                padding: 5px;
+                font-size: 0.7em;
+            }
+
+            .summary {
+                font-size: 0.9em;
             }
         }
     </style>
     <script>
-        // ตรวจสอบสถานะการล็อกอิน
         if (sessionStorage.getItem('loggedIn') !== 'true') {
             window.location.href = 'login.html';
         }
@@ -224,9 +192,7 @@
 <body>
     <div class="container">
         <div class="header">BacaraProX</div>
-
         <div class="result-display waiting-result" id="nextResult">รอตาถัดไป</div>
-
         <div class="score-grid" id="scoreGrid"></div>
 
         <div class="buttons">
@@ -247,12 +213,12 @@
                 <option value="ห้อง บาคาร่า 3/15">ห้อง บาคาร่า 3/15</option>
                 <option value="ห้อง บาคาร่า 4/15">ห้อง บาคาร่า 4/15</option>
                 <option value="ห้อง บาคาร่า 5/15">ห้อง บาคาร่า 5/15</option>
-				<option value="ห้อง บาคาร่า 6/15">ห้อง บาคาร่า 6/15</option>
-				<option value="ห้อง บาคาร่า 7/15">ห้อง บาคาร่า 7/15</option>
-				<option value="ห้อง บาคาร่า 8/15">ห้อง บาคาร่า 8/15</option>
-				<option value="ห้อง บาคาร่า 9/15">ห้อง บาคาร่า 9/15</option>
-				<option value="ห้อง บาคาร่า 1015">ห้อง บาคาร่า 10/15<option>
-				<option value="ห้อง บาคาร่า 1115">ห้อง บาคาร่า 11/15<option>
+                <option value="ห้อง บาคาร่า 6/15">ห้อง บาคาร่า 6/15</option>
+                <option value="ห้อง บาคาร่า 7/15">ห้อง บาคาร่า 7/15</option>
+                <option value="ห้อง บาคาร่า 8/15">ห้อง บาคาร่า 8/15</option>
+                <option value="ห้อง บาคาร่า 9/15">ห้อง บาคาร่า 9/15</option>
+                <option value="ห้อง บาคาร่า 10/15">ห้อง บาคาร่า 10/15</option>
+                <option value="ห้อง บาคาร่า 11/15">ห้อง บาคาร่า 11/15</option>
             </select>
         </div>
 
@@ -282,9 +248,7 @@
                     <th>Total Capital</th>
                 </tr>
             </thead>
-            <tbody id="reportTable">
-                <!-- Results will be added here -->
-            </tbody>
+            <tbody id="reportTable"></tbody>
         </table>
 
         <div class="summary">
@@ -299,7 +263,7 @@
         </div>
     </div>
 
-    <!-- เพิ่มโค้ดสำหรับ Chart.js และ Chart.js Data Labels -->
+    <!-- เพิ่มโค้ดสำหรับ Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
