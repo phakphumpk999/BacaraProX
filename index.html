@@ -1,0 +1,591 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BacaraProX</title>
+    <style>
+        body {
+            background-color: #1e1e2f;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #dcdde1;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* สีสำหรับ Win และ Lose */
+        .win {
+            color: #2ecc71; /* สีเขียวสำหรับ Win */
+            font-weight: bold;
+        }
+
+        .lose {
+            color: #e74c3c; /* สีแดงสำหรับ Lose */
+            font-weight: bold;
+        }
+
+        /* สไตล์หลัก */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .header {
+            font-size: 2em;
+            margin: 20px 0;
+            color: #fff;
+        }
+
+        .result-display {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px auto;
+            font-size: 1.8em;
+            width: 80%;
+            color: #fff;
+        }
+
+        .player-result {
+            background-color: #3498db;
+        }
+
+        .banker-result {
+            background-color: #e74c3c;
+        }
+
+        .waiting-result {
+            background-color: #353b48;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 50px);
+            gap: 5px;
+            justify-content: center;
+            margin: 20px auto;
+        }
+
+        .score-cell {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .player { background-color: #3498db; color: #fff; }
+        .banker { background-color: #e74c3c; color: #fff; }
+        .tie { background-color: #2ecc71; color: #fff; }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-player { background-color: #3498db; color: #fff; }
+        .btn-tie { background-color: #2ecc71; color: #fff; }
+        .btn-banker { background-color: #e74c3c; color: #fff; }
+        .btn-back { background-color: #f39c12; color: #fff; }
+        .btn-clear { background-color: #d35400; color: #fff; }
+
+        button:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        .settings, .score-settings {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px;
+        }
+
+        .settings label, .score-settings label {
+            font-size: 1.1em;
+            margin-right: 5px;
+            color: #dcdde1;
+        }
+
+        /* ความกว้างของช่องเลือกห้อง */
+        .score-settings select {
+            padding: 10px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: none;
+            width: 220px;
+            text-align: center;
+        }
+
+        .settings input[type="number"], .score-settings select {
+            padding: 10px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+        }
+
+        .report-table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .report-table th, .report-table td {
+            padding: 15px;
+            border: 1px solid #333;
+            text-align: center;
+            background-color: #353b48;
+            color: #dcdde1;
+        }
+
+        .report-table th {
+            background-color: #2f3640;
+            font-weight: bold;
+        }
+
+        .summary {
+            font-size: 1.3em;
+            margin: 20px 0;
+            color: #f5f6fa;
+        }
+
+        .chart-container {
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .report-table td.win {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .report-table td.lose {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        /* CSS สำหรับแถบโหลด */
+        .loader {
+            width: 60%;
+            height: 10px;
+            border-radius: 2px;
+            background-color: rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .loader::before {
+            content: "";
+            position: absolute;
+            background-color: rgb(9, 188, 9);
+            width: 0%;
+            height: 100%;
+            border-radius: 2px;
+            animation: load 3.5s ease-in-out infinite;
+            box-shadow: rgb(9, 188, 9) 0px 2px 29px 0px;
+        }
+
+        @keyframes load {
+            50% {
+                width: 100%;
+            }
+            100% {
+                right: 0;
+                left: unset;
+            }
+        }
+    </style>
+    <script>
+        // ตรวจสอบสถานะการล็อกอิน
+        if (sessionStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = 'login.html';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">BacaraProX</div>
+
+        <div class="result-display waiting-result" id="nextResult">รอตาถัดไป</div>
+
+        <div class="score-grid" id="scoreGrid"></div>
+
+        <div class="buttons">
+            <button class="btn-player" onclick="addScore('P')">Player</button>
+            <button class="btn-tie" onclick="addScore('T')">Tie</button>
+            <button class="btn-banker" onclick="addScore('B')">Banker</button>
+        </div>
+        <div class="buttons">
+            <button class="btn-back" onclick="removeLastScore()">Back</button>
+            <button class="btn-clear" onclick="clearScores()">Clear</button>
+        </div>
+
+        <div class="score-settings">
+            <label for="roomSelect">ห้องที่เล่น:</label>
+            <select id="roomSelect">
+                <option value="ห้อง บาคาร่า 1/15">ห้อง บาคาร่า 1/15</option>
+                <option value="ห้อง บาคาร่า 2/15">ห้อง บาคาร่า 2/15</option>
+                <option value="ห้อง บาคาร่า 3/15">ห้อง บาคาร่า 3/15</option>
+                <option value="ห้อง บาคาร่า 4/15">ห้อง บาคาร่า 4/15</option>
+                <option value="ห้อง บาคาร่า 5/15">ห้อง บาคาร่า 5/15</option>
+				<option value="ห้อง บาคาร่า 6/15">ห้อง บาคาร่า 6/15</option>
+				<option value="ห้อง บาคาร่า 7/15">ห้อง บาคาร่า 7/15</option>
+				<option value="ห้อง บาคาร่า 8/15">ห้อง บาคาร่า 8/15</option>
+				<option value="ห้อง บาคาร่า 9/15">ห้อง บาคาร่า 9/15</option>
+				<option value="ห้อง บาคาร่า 1015">ห้อง บาคาร่า 10/15<option>
+				<option value="ห้อง บาคาร่า 1115">ห้อง บาคาร่า 11/15<option>
+            </select>
+        </div>
+
+        <div class="settings">
+            <div>
+                <label for="initialBet">ไม้แรก (บาท):</label>
+                <input type="number" id="initialBet" value="50">
+            </div>
+            <div>
+                <label for="maxSteps">จำนวนไม้ใน Martingale:</label>
+                <input type="number" id="maxSteps" value="4" min="1">
+            </div>
+            <div>
+                <label>ทุนที่ต้องใช้:</label>
+                <span id="requiredCapital">0</span> บาท
+            </div>
+        </div>
+
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Bet</th>
+                    <th>Step</th>
+                    <th>Result</th>
+                    <th>Connection</th>
+                    <th>Profit/Loss</th>
+                    <th>Total Capital</th>
+                </tr>
+            </thead>
+            <tbody id="reportTable">
+                <!-- Results will be added here -->
+            </tbody>
+        </table>
+
+        <div class="summary">
+            <span>ทุนสุทธิทั้งหมด: </span><span id="totalCapital">0</span> บาท
+        </div>
+
+        <div class="chart-container">
+            <canvas id="lineChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+
+    <!-- เพิ่มโค้ดสำหรับ Chart.js และ Chart.js Data Labels -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+    <script>
+        const patterns = {
+            "PBPB": "P",
+            "BPBP": "B",
+            "PPBB": "P",
+            "BBPP": "B",
+            "PPPB": "P",
+            "BBBP": "B",
+            "PBBB": "P",
+            "BPPP": "B",
+            "BBPB": "P",
+            "PPPP": "P",
+            "BBBB": "B",
+            "PPBP": "B"
+        };
+        
+        let scores = [];
+        let predictedResult = "";
+        let initialCapital = 0;
+        let totalCapital = 0;
+        let currentBet = 50;
+        let currentStep = 1;
+
+        // ข้อมูลสำหรับกราฟ
+        let winCount = 0;
+        let loseCount = 0;
+        const labels = [];
+        const dataWinLose = [];
+
+        // สร้างกราฟเส้น
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        const lineChart = new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'ผลลัพธ์แต่ละไม้',
+                    data: dataWinLose,
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+
+        // สร้างกราฟแท่งพร้อมแสดงเปอร์เซ็นต์
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Win', 'Lose'],
+                datasets: [{
+                    label: 'จำนวนการชนะและแพ้',
+                    data: [winCount, loseCount],
+                    backgroundColor: ['green', 'red'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    datalabels: {
+                        color: '#fff',
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                        formatter: (value, context) => {
+                            const total = winCount + loseCount;
+                            const percentage = total ? (value / total * 100).toFixed(1) + '%' : '0%';
+                            return percentage;
+                        }
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+
+        function calculateRequiredCapital() {
+            const initialBet = parseInt(document.getElementById("initialBet").value) || 50;
+            const maxSteps = parseInt(document.getElementById("maxSteps").value) || 4;
+            let requiredCapital = 0;
+            let bet = initialBet;
+
+            for (let i = 0; i < maxSteps; i++) {
+                requiredCapital += bet;
+                bet *= 2;
+            }
+
+            document.getElementById("requiredCapital").textContent = requiredCapital;
+            initialCapital = requiredCapital;
+            totalCapital = initialCapital;
+            document.getElementById("totalCapital").textContent = totalCapital;
+        }
+
+        document.getElementById("initialBet").addEventListener("input", calculateRequiredCapital);
+        document.getElementById("maxSteps").addEventListener("input", calculateRequiredCapital);
+        calculateRequiredCapital();
+
+        function addScore(result) {
+            if (scores.length === 0) {  
+                alert("กรุณาตรวจสอบให้แน่ใจว่าได้เลือกห้องที่เล่นในปัจจุบัน เพื่อให้ระบบสามารถคำนวณผลได้อย่างแม่นยำสูงสุด");
+            }
+
+            scores.push(result); 
+            updateScoreGrid();
+
+            if (result === "P" || result === "B") {
+                checkPrediction(result);
+            } else {
+                checkPattern(); 
+            }
+        }
+
+        function updateScoreGrid() {
+            const scoreGrid = document.getElementById("scoreGrid");
+            scoreGrid.innerHTML = "";
+
+            const maxRows = 6; 
+            let column = 0;
+            let row = 0;
+
+            scores.forEach(score => {
+                const cell = document.createElement("div");
+                cell.classList.add("score-cell");
+
+                if (score === "P") {
+                    cell.classList.add("player");
+                } else if (score === "B") {
+                    cell.classList.add("banker");
+                } else if (score === "T") {
+                    cell.classList.add("tie");
+                }
+
+                if (row >= maxRows) {
+                    column++;
+                    row = 0;
+                }
+
+                cell.textContent = score;
+                scoreGrid.appendChild(cell);
+                
+                cell.style.gridColumnStart = column + 1;
+                cell.style.gridRowStart = row + 1;
+                
+                row++;
+            });
+        }
+
+        function checkPattern() {
+            const nextResultDisplay = document.getElementById("nextResult");
+            const filteredScores = scores.filter(score => score === "P" || score === "B");
+
+            if (filteredScores.length >= 4) {
+                const lastFour = filteredScores.slice(-4).join("");
+                predictedResult = patterns[lastFour] || ""; 
+                
+                if (predictedResult === "P" || predictedResult === "B") {
+                    const resultText = predictedResult === "P" ? "PLAYER" : "BANKER";
+                    nextResultDisplay.textContent = `${resultText} ไม้ที่ ${currentStep} ลงเงิน ${currentBet} บาท`;
+                    nextResultDisplay.className = `result-display ${predictedResult === "P" ? "player-result" : "banker-result"}`;
+                } else {
+                    nextResultDisplay.textContent = "รอตาถัดไป";
+                    nextResultDisplay.className = "result-display waiting-result";
+                }
+            } else {
+                nextResultDisplay.textContent = "รอตาถัดไป";
+                nextResultDisplay.className = "result-display waiting-result";
+                predictedResult = "";
+            }
+        }
+
+       function checkPrediction(actualResult) {
+            const initialBet = parseInt(document.getElementById("initialBet").value) || 50;
+            const maxSteps = parseInt(document.getElementById("maxSteps").value) || 4;
+            let profitOrLoss = 0;
+
+            if (predictedResult) {
+                const reportTable = document.getElementById("reportTable");
+                const row = document.createElement("tr");
+                const betCell = document.createElement("td");
+                const stepCell = document.createElement("td");
+                const resultCell = document.createElement("td");
+                const amountCell = document.createElement("td");
+                const profitLossCell = document.createElement("td");
+                const totalCapitalCell = document.createElement("td");
+
+                betCell.textContent = predictedResult === "P" ? "PLAYER" : "BANKER";
+                stepCell.textContent = `ไม้ที่ ${currentStep}`;
+
+                if (predictedResult === actualResult) {
+                    resultCell.textContent = "Win";
+                    resultCell.classList.add("win");
+                    profitLossCell.classList.add("win");
+                    profitOrLoss = currentBet;
+                    totalCapital += profitOrLoss;
+                    currentBet = initialBet;
+                    currentStep = 1;
+                    updateCharts("Win");
+                } else {
+                    resultCell.textContent = "Lose";
+                    resultCell.classList.add("lose");
+                    profitLossCell.classList.add("lose");
+                    profitOrLoss = -currentBet;
+                    totalCapital += profitOrLoss;
+
+                    if (currentStep < maxSteps) {
+                        currentStep++;
+                        currentBet *= 2;
+                    } else {
+                        currentBet = initialBet;
+                        currentStep = 1;
+                    }
+                    updateCharts("Lose");
+                }
+
+                // เพิ่มแถบโหลดในช่อง Amount (บาท)
+                const loader = document.createElement("div");
+                loader.className = "loader";
+                amountCell.appendChild(loader);
+
+                profitLossCell.textContent = profitOrLoss;
+                totalCapitalCell.textContent = totalCapital;
+
+                row.appendChild(betCell);
+                row.appendChild(stepCell);
+                row.appendChild(resultCell);
+                row.appendChild(amountCell);
+                row.appendChild(profitLossCell);
+                row.appendChild(totalCapitalCell);
+                reportTable.appendChild(row);
+
+                predictedResult = "";
+            }
+            checkPattern();
+            document.getElementById("totalCapital").textContent = totalCapital;
+        }
+
+        function removeLastScore() {
+            scores.pop();
+            updateScoreGrid();
+            checkPattern();
+            
+            const reportTable = document.getElementById("reportTable");
+            if (reportTable.lastChild) {
+                reportTable.removeChild(reportTable.lastChild);
+            }
+        }
+
+        function updateCharts(result) {
+            labels.push(`ไม้ ${labels.length + 1}`);
+            dataWinLose.push(result === 'Win' ? 1 : -1);
+            lineChart.update();
+
+            if (result === 'Win') {
+                winCount++;
+            } else {
+                loseCount++;
+            }
+            barChart.data.datasets[0].data = [winCount, loseCount];
+            barChart.update();
+        }
+
+        function clearScores() {
+            scores = []; 
+            predictedResult = ""; 
+            updateScoreGrid(); 
+
+            const nextResultDisplay = document.getElementById("nextResult");
+            nextResultDisplay.textContent = "รอตาถัดไป";
+            nextResultDisplay.className = "result-display waiting-result";
+        }
+    </script>
+
+</body>
+</html>

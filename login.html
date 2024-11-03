@@ -1,0 +1,165 @@
+<<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ</title>
+    <style>
+        /* ตั้งค่าสีและสไตล์พื้นฐาน */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1c1c1c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        /* โลโก้ */
+        #logo-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px; /* ขนาดเท่ากับฟอร์มล็อกอิน */
+            margin-bottom: 20px;
+        }
+
+        #logo {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* ฟอร์มล็อกอิน */
+        .form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            background-color: #2a2a2a;
+            border-radius: 12px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        /* หัวข้อ */
+        #heading {
+            color: #fff;
+            font-size: 1.5em;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+
+        /* ช่องกรอกข้อมูล */
+        .field {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.8em;
+            margin-bottom: 1em;
+            background-color: #333;
+            border: none;
+            border-radius: 8px;
+            color: #dcdcdc;
+        }
+
+        .input-field {
+            background: none;
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 1em;
+            color: #dcdcdc;
+        }
+
+        /* ปุ่ม */
+        .btn-group {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            margin-top: 1em;
+        }
+
+        .button1, .signup-button {
+            width: 100%;
+            padding: 0.8em;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .button1 {
+            background-color: #3498db;
+        }
+
+        .button1:hover {
+            background-color: #2980b9;
+        }
+
+        .signup-button {
+            background-color: #e74c3c;
+        }
+
+        .signup-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- โลโก้ -->
+    <div id="logo-container">
+        <img id="logo" src="https://img2.pic.in.th/pic/2697987810cf11f47.jpeg" alt="โลโก้">
+    </div>
+
+    <!-- ฟอร์มล็อกอิน -->
+    <div class="form">
+        <h2 id="heading">เข้าสู่ระบบ</h2>
+        
+        <div class="field">
+            <input type="email" id="email" class="input-field" placeholder="อีเมล" required>
+        </div>
+        <div class="field">
+            <input type="password" id="password" class="input-field" placeholder="รหัสผ่าน" required>
+        </div>
+
+        <!-- กลุ่มปุ่ม -->
+        <div class="btn-group">
+            <button class="button1" type="submit" onclick="login(event)">ลงชื่อเข้าใช้</button>
+            <a href="https://t.me/Aibaccaratt" target="_blank" class="signup-button">สร้างบัญชี</a>
+        </div>
+    </div>
+
+    <script>
+        // ข้อมูลผู้ใช้และรหัสผ่าน
+        const accounts = [
+            { email: "pakpoompk9992@gmail.com", password: "Pk0816998761" },
+            { email: "user99@example.com", password: "Q8@xJ&y7^G" }
+        ];
+
+        function login(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const isValid = accounts.some(account => account.email === email && account.password === password);
+
+            if (isValid) {
+                sessionStorage.setItem('loggedIn', 'true');
+                window.location.href = 'index.html';
+            } else {
+                alert('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
+            }
+        }
+    </script>
+
+</body>
+</html>
