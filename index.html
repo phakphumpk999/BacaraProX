@@ -12,24 +12,31 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         /* สีสำหรับ Win และ Lose */
         .win {
-            color: #2ecc71; /* สีเขียวสำหรับ Win */
+            color: #2ecc71;
             font-weight: bold;
         }
 
         .lose {
-            color: #e74c3c; /* สีแดงสำหรับ Lose */
+            color: #e74c3c;
             font-weight: bold;
         }
 
         /* สไตล์หลัก */
         .container {
             max-width: 1200px;
-            margin: auto;
+            width: 100%;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .header {
@@ -45,6 +52,7 @@
             font-size: 1.8em;
             width: 80%;
             color: #fff;
+            text-align: center;
         }
 
         .player-result {
@@ -123,7 +131,6 @@
             color: #dcdde1;
         }
 
-        /* ความกว้างของช่องเลือกห้อง */
         .score-settings select {
             padding: 10px;
             font-size: 1.1em;
@@ -231,7 +238,7 @@
             }
 
             .score-grid {
-                grid-template-columns: repeat(6, 40px); /* ปรับให้แสดงในแนวนอนน้อยลง */
+                grid-template-columns: repeat(6, 40px);
                 gap: 5px;
             }
 
@@ -311,8 +318,8 @@
 				<option value="ห้อง บาคาร่า 7/15">ห้อง บาคาร่า 7/15</option>
 				<option value="ห้อง บาคาร่า 8/15">ห้อง บาคาร่า 8/15</option>
 				<option value="ห้อง บาคาร่า 9/15">ห้อง บาคาร่า 9/15</option>
-				<option value="ห้อง บาคาร่า 1015">ห้อง บาคาร่า 10/15<option>
-				<option value="ห้อง บาคาร่า 1115">ห้อง บาคาร่า 11/15<option>
+				<option value="ห้อง บาคาร่า 1015">ห้อง บาคาร่า 10/15</option>
+				<option value="ห้อง บาคาร่า 1115">ห้อง บาคาร่า 11/15</option>
             </select>
         </div>
 
