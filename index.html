@@ -213,70 +213,6 @@
                 left: unset;
             }
         }
-
-        /* การปรับแต่งสำหรับหน้าจอมือถือ */
-        @media (max-width: 768px) {
-            .container {
-                max-width: 100%;
-                padding: 10px;
-            }
-
-            .header {
-                font-size: 1.5em;
-                margin: 10px 0;
-            }
-
-            .result-display {
-                font-size: 1.5em;
-                width: 90%;
-            }
-
-            .score-grid {
-                grid-template-columns: repeat(6, 45px);
-                gap: 4px;
-            }
-
-            .score-cell {
-                width: 45px;
-                height: 45px;
-                font-size: 1em;
-            }
-
-            .buttons {
-                flex-direction: column;
-                gap: 10px;
-                margin: 10px;
-            }
-
-            button {
-                padding: 10px 20px;
-                font-size: 1em;
-            }
-
-            .settings, .score-settings {
-                flex-direction: column;
-                gap: 10px;
-                margin: 15px;
-            }
-
-            .score-settings select,
-            .settings input[type="number"] {
-                width: 100%;
-            }
-
-            .report-table {
-                width: 100%;
-            }
-
-            .summary {
-                font-size: 1.1em;
-            }
-
-            .chart-container {
-                width: 100%;
-                margin: 10px 0;
-            }
-        }
     </style>
     <script>
         // ตรวจสอบสถานะการล็อกอิน
@@ -288,7 +224,9 @@
 <body>
     <div class="container">
         <div class="header">BacaraProX</div>
+
         <div class="result-display waiting-result" id="nextResult">รอตาถัดไป</div>
+
         <div class="score-grid" id="scoreGrid"></div>
 
         <div class="buttons">
@@ -309,12 +247,12 @@
                 <option value="ห้อง บาคาร่า 3/15">ห้อง บาคาร่า 3/15</option>
                 <option value="ห้อง บาคาร่า 4/15">ห้อง บาคาร่า 4/15</option>
                 <option value="ห้อง บาคาร่า 5/15">ห้อง บาคาร่า 5/15</option>
-                <option value="ห้อง บาคาร่า 6/15">ห้อง บาคาร่า 6/15</option>
-                <option value="ห้อง บาคาร่า 7/15">ห้อง บาคาร่า 7/15</option>
-                <option value="ห้อง บาคาร่า 8/15">ห้อง บาคาร่า 8/15</option>
-                <option value="ห้อง บาคาร่า 9/15">ห้อง บาคาร่า 9/15</option>
-                <option value="ห้อง บาคาร่า 10/15">ห้อง บาคาร่า 10/15</option>
-                <option value="ห้อง บาคาร่า 11/15">ห้อง บาคาร่า 11/15</option>
+				<option value="ห้อง บาคาร่า 6/15">ห้อง บาคาร่า 6/15</option>
+				<option value="ห้อง บาคาร่า 7/15">ห้อง บาคาร่า 7/15</option>
+				<option value="ห้อง บาคาร่า 8/15">ห้อง บาคาร่า 8/15</option>
+				<option value="ห้อง บาคาร่า 9/15">ห้อง บาคาร่า 9/15</option>
+				<option value="ห้อง บาคาร่า 1015">ห้อง บาคาร่า 10/15<option>
+				<option value="ห้อง บาคาร่า 1115">ห้อง บาคาร่า 11/15<option>
             </select>
         </div>
 
@@ -344,7 +282,9 @@
                     <th>Total Capital</th>
                 </tr>
             </thead>
-            <tbody id="reportTable"></tbody>
+            <tbody id="reportTable">
+                <!-- Results will be added here -->
+            </tbody>
         </table>
 
         <div class="summary">
@@ -359,7 +299,7 @@
         </div>
     </div>
 
-    <!-- เพิ่มโค้ดสำหรับ Chart.js -->
+    <!-- เพิ่มโค้ดสำหรับ Chart.js และ Chart.js Data Labels -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
