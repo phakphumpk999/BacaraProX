@@ -235,25 +235,20 @@
             .container {
                 width: 100%;
                 padding: 10px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
             }
 
             .header {
                 font-size: 1.5em;
             }
 
-            .result-display, .buttons, .score-settings, .settings {
+            .result-display {
+                font-size: 1.2em;
                 width: 90%;
-                text-align: center;
             }
 
             .score-grid {
-                grid-template-columns: repeat(6, 1fr);
+                grid-template-columns: repeat(6, 40px);
                 gap: 5px;
-                justify-content: center;
             }
 
             .score-cell {
@@ -262,9 +257,28 @@
                 font-size: 1em;
             }
 
-            .report-table, .chart-container {
+            .buttons {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+
+            .settings, .score-settings {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .report-table {
                 width: 100%;
                 font-size: 0.9em;
+            }
+
+            .chart-container {
+                width: 100%;
             }
 
             .summary {
@@ -545,8 +559,8 @@
                 
                 if (predictedResult === "P" || predictedResult === "B") {
                     const resultText = predictedResult === "P" ? "PLAYER" : "BANKER";
-                    nextResultDisplay.textContent = `${resultText} ไม้ที่ ${currentStep} ลงเงิน ${currentBet} บาท`;
-                    nextResultDisplay.className = `result-display ${predictedResult === "P" ? "player-result" : "banker-result"}`;
+                    nextResultDisplay.textContent = ${resultText} ไม้ที่ ${currentStep} ลงเงิน ${currentBet} บาท;
+                    nextResultDisplay.className = result-display ${predictedResult === "P" ? "player-result" : "banker-result"};
                 } else {
                     nextResultDisplay.textContent = "รอตาถัดไป";
                     nextResultDisplay.className = "result-display waiting-result";
@@ -574,7 +588,7 @@
                 const totalCapitalCell = document.createElement("td");
 
                 betCell.textContent = predictedResult === "P" ? "PLAYER" : "BANKER";
-                stepCell.textContent = `ไม้ที่ ${currentStep}`;
+                stepCell.textContent = ไม้ที่ ${currentStep};
 
                 if (predictedResult === actualResult) {
                     resultCell.textContent = "Win";
@@ -637,7 +651,7 @@
         }
 
         function updateCharts(result) {
-            labels.push(`ไม้ ${labels.length + 1}`);
+            labels.push(ไม้ ${labels.length + 1});
             dataWinLose.push(result === 'Win' ? 1 : -1);
             lineChart.update();
 
