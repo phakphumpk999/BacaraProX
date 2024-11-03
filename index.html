@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>  
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -235,20 +235,25 @@
             .container {
                 width: 100%;
                 padding: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
             }
 
             .header {
                 font-size: 1.5em;
             }
 
-            .result-display {
-                font-size: 1.2em;
+            .result-display, .buttons, .score-settings, .settings {
                 width: 90%;
+                text-align: center;
             }
 
             .score-grid {
-                grid-template-columns: repeat(6, 40px);
+                grid-template-columns: repeat(6, 1fr);
                 gap: 5px;
+                justify-content: center;
             }
 
             .score-cell {
@@ -257,28 +262,9 @@
                 font-size: 1em;
             }
 
-            .buttons {
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-
-            button {
-                padding: 10px 20px;
-                font-size: 1em;
-            }
-
-            .settings, .score-settings {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .report-table {
+            .report-table, .chart-container {
                 width: 100%;
                 font-size: 0.9em;
-            }
-
-            .chart-container {
-                width: 100%;
             }
 
             .summary {
