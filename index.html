@@ -213,6 +213,66 @@
                 left: unset;
             }
         }
+
+        /* ทำให้เว็บไซต์รองรับการแสดงผลบนมือถือ */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .header {
+                font-size: 1.5em;
+            }
+
+            .result-display {
+                font-size: 1.2em;
+                width: 90%;
+            }
+
+            .score-grid {
+                grid-template-columns: repeat(6, 40px); /* ปรับให้แสดงในแนวนอนน้อยลง */
+                gap: 5px;
+            }
+
+            .score-cell {
+                width: 40px;
+                height: 40px;
+                font-size: 1em;
+            }
+
+            .buttons {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+
+            .settings, .score-settings {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .report-table {
+                width: 100%;
+                font-size: 0.9em;
+            }
+
+            .chart-container {
+                width: 100%;
+            }
+
+            .summary {
+                font-size: 1.1em;
+            }
+
+            .loader {
+                width: 90%;
+            }
+        }
     </style>
     <script>
         // ตรวจสอบสถานะการล็อกอิน
